@@ -26,7 +26,7 @@ const styles = {
 }
 
 
-class Main extends React.Component{
+class Advertiser extends React.Component{
   constructor(props){
     super(props);
     this.state={uname:'', pass:'', redirect:false};
@@ -68,4 +68,4 @@ class Main extends React.Component{
     );
   }
 }
-export default Main;
+export default Advertiser;
