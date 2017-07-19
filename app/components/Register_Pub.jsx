@@ -61,7 +61,7 @@ class App extends React.Component {
 
   handleSubmit() {
     this.setState({redirect:true});
-    axios.post('http://localhost:8081/api/insert_pub',{ username:this.state.uname, password: this.state.pass,
+    axios.post('http://localhost:8082/api/insert_pub',{ username:this.state.uname, password: this.state.pass,
                 firstname:this.state.fname,middlename:this.state.mname,
                 lastname:this.state.lname,
                 gender:this.state.gender,

@@ -34,11 +34,13 @@ class Publisher extends React.Component{
   }
 
   handleSubmit(){
-    axios.post('http://localhost:8081/api/login_pub',{ username:this.state.uname, password: this.state.pass,})
-      .then(
-      function(res){
-        if(res.statusCode == 200){this.setState({redirect:true});
-        console.log(res);}
+    axios.post('http://localhost:8082/api/login_pub',{ username:this.state.uname, password: this.state.pass,})
+      .then( (res) => {
+        if(res.statusCode == 200)
+        {
+          this.setState({redirect:true});
+          console.log(res);
+        }
       })
     .catch(function(e){console.log(e);});
   }

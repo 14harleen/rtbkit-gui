@@ -4,7 +4,7 @@ var connection = mysql.createConnection({
   host:'localhost',
   user:'root',
   password:'root',
-  database: 'test',
+  database: 'rtb',
 });
 connection.connect(function(err){
   if (err) throw err;
@@ -30,24 +30,26 @@ exports.insertPub = function(req, res, next) {
 exports.loginAdv = function(req, res, next) {
   var username=req.body.username;
   var password=req.body.password;
-  connection.query('SELECT * FROM advertisers WHERE username=?',username, function (error, results){
-    if(res.length == 1){
-      if(res.[0] == password){
-        res.send(statusCode=200);
+  connection.query('SELECT * FROM advertisers WHERE username=?',[username], function (error, results,fields){
+    if(error){res.send({"code":400, "failed":"error occured"})}
+    else{
+    if(results.length == 1){
+      if(results[0].password == password){
+        res.send({"code":200, "success": "login successful" });
         console.log("Login successful");
       }
       else{console.log("password mismatch");}
     }
     else{console.log("Invalid username");}
-  });
+  } });
 }
 
 exports.loginPub = function(req, res, next) {
   var username=req.body.username;
   var password=req.body.password;
-  connection.query('SELECT * FROM publishers WHERE username=?',username, function (error, results){
+  connection.query('SELECT * FROM publishers WHERE username=?',username, function (error, res){
     if(res.length == 1){
-      if(res.[0] == password){
+      if(res[0] == password){
         res.send(statusCode=200);
         console.log("Login successful");
       }

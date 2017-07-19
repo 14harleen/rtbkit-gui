@@ -6,6 +6,7 @@ import {Card, CardTitle, CardActions} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import {Link, Redirect} from 'react-router-dom';
+import axios from 'axios';
 
 
 const styles = {
@@ -34,11 +35,13 @@ class Advertiser extends React.Component{
   }
 
   handleSubmit(){
-    axios.post('http://localhost:8081/api/login_adv',{ username:this.state.uname, password: this.state.pass,})
-      .then(
-        function(res){
-          if(res.statusCode == 200){this.setState({redirect:true});
-          console.log(res);}
+    axios.post('http://localhost:8082/api/login_adv',{ username:this.state.uname, password: this.state.pass})
+      .then( (res) => {
+          if(res.status == 200)
+          {
+            this.setState({redirect:true});
+            console.log(res);
+          }
         })
       .catch(function(e){console.log(e);});
 
