@@ -16,11 +16,29 @@ import { ValidatorForm, TextValidator, SelectValidator, DateValidator} from 'rea
 import {Link, Redirect} from 'react-router-dom';
 
 
+const styles = {
+  card:{
+    marginLeft:'5%',
+    marginRight:'5%',
+    marginTop:'3%',
+    paddingLeft:'5%',
+  },
+  button:{
+    marginBottom:'20px',
+    marginTop:'20px',
+    height:'60px',
+    width:'100px',
+    textAlign:'center',
+    fontSize:'40px',
+  }
+}
+
+
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      fname:'',mname:'',lname:'',gender:'',date:'',age:'',mobile:'',
+      uname:'', pass:'', fname:'',mname:'',lname:'',gender:'',date:'',age:'',mobile:'',
       add1:'',add2:'',city:'',state:'',pin:'',nationality:'',count_code:'', country:'',redirect:false,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,23 +47,22 @@ class App extends React.Component {
     this.changeCountry = this.changeCountry.bind(this);
   }
 
-changeCountry(value){
-  this.setState({countryc:value});
-}
+  changeCountry(value){
+    this.setState({countryc:value});
+  }
 
-changeNationality(value){
-  this.setState({nationality:value});
-}
+  changeNationality(value){
+    this.setState({nationality:value});
+  }
 
-changeCountryCode(value){
-  this.setState({count_code:value});
-}
+  changeCountryCode(value){
+    this.setState({count_code:value});
+  }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     this.setState({redirect:true});
-
-    axios.post('http://localhost:8081/api/insert',{firstname:this.state.fname,middlename:this.state.mname,
+    axios.post('http://localhost:8081/api/insert_adv',{ username:this.state.uname, password: this.state.pass,
+                firstname:this.state.fname,middlename:this.state.mname,
                 lastname:this.state.lname,
                 gender:this.state.gender,
                 nationality:this.state.nationality,
@@ -63,7 +80,7 @@ changeCountryCode(value){
 
  render() {
  if(this.state.redirect){
-   return <Redirect to="/submit" />;
+   return <Redirect to="/advertiser" />;
  }
 
     return (
@@ -72,24 +89,38 @@ changeCountryCode(value){
 
         <AppBar zDepth={1} title="Register" showMenuIconButton={false}/>
 
-        <Card zDepth={1}>
+        <Card style={styles.card} zDepth={1}>
         <ValidatorForm ref="form" onSubmit={this.handleSubmit} instantValidate={true}>
 
+        <TextValidator
+          name="uname"
+          value={this.state.uname}
+          floatingLabelText = "UserName"
+          onChange={(event,value) => this.setState({uname:value})}
+          validators={['required']}
+          errorMessages={['This field is required']} /> <nbsp/>
+        <TextValidator
+          name="pass"
+          value={this.state.pass} type="password"
+          floatingLabelText = "Password"
+          onChange={(event,value) => this.setState({pass:value})}
+          validators={['required']}
+          errorMessages={['This field is required']} /> <br />
         <TextValidator
           name="fname"
           value={this.state.fname}
           floatingLabelText = "First Name"
           onChange={(event,value) => this.setState({fname:value})}
           validators={['required']}
-          errorMessages={['This field is required']} />
+          errorMessages={['This field is required']} /> <nbsp/>
         <TextField
           value={this.state.mname}
           floatingLabelText="Middle Name"
-          onChange={(event,value)=>this.setState({mname:value})} />
+          onChange={(event,value)=>this.setState({mname:value})} /> <nbsp/>
         <TextField
           value={this.state.lname}
           floatingLabelText="Last Name"
-          onChange={(event,value)=>this.setState({lname:value})} />
+          onChange={(event,value)=>this.setState({lname:value})} /> <br />
 
         <SelectValidator name="gender" validators={['required']} errorMessages={['This field is required']}
                       floatingLabelText="Gender" value={this.state.gender}
@@ -115,20 +146,20 @@ changeCountryCode(value){
 
         <TextValidator name="mobile" validators={['required','isNumber']} errorMessages={['This field is required','Invalid']}
                              value={this.state.mobile}
-                             onChange={(event,value)=>this.setState({mobile:value})} floatingLabelText="Mobile No." />
+                             onChange={(event,value)=>this.setState({mobile:value})} floatingLabelText="Mobile No." /> <br/>
 
         <TextValidator name="add1" validators={['required']} errorMessages={['This field is required']}
                               value={this.state.add1}
-                              onChange={(event,value)=>this.setState({add1:value})} floatingLabelText="Address Line 1"/>
+                              onChange={(event,value)=>this.setState({add1:value})} floatingLabelText="Address Line 1"/> <nbsp/>
         <TextValidator name="add2" validators={['required']} errorMessages={['This field is required']}
                               value={this.state.add2}
-                              onChange={(event,value)=>this.setState({add2:value})} floatingLabelText="Address Line 2" />
+                              onChange={(event,value)=>this.setState({add2:value})} floatingLabelText="Address Line 2" /> <nbsp/>
         <TextValidator name="city" validators={['required']} errorMessages={['This field is required']}
                               value={this.state.city}
-                              onChange={(event,value)=>this.setState({city:value})} floatingLabelText="City/Village/Place" />
+                              onChange={(event,value)=>this.setState({city:value})} floatingLabelText="City/Village/Place" /><br/>
         <TextValidator name="state" validators={['required']} errorMessages={['This field is required']}
                              value={this.state.state}
-                             onChange={(event,value)=>this.setState({state:value})} floatingLabelText="State" />
+                             onChange={(event,value)=>this.setState({state:value})} floatingLabelText="State" /> <nbsp/>
         <TextValidator name="pin" validators={['required','isNumber']} errorMessages={['This field is required','Invalid']}
                               value={this.state.pin}
                               onChange={(event,value)=>this.setState({pin:value})} floatingLabelText="Pin" />
@@ -136,7 +167,7 @@ changeCountryCode(value){
         <Country callback={this.changeCountry} c1={this.state.country}/>
 
 
-        <RaisedButton label="Submit" type="submit" primary={true}/>
+        <RaisedButton style={styles.button} label="Submit" type="submit" primary={true}/>
 
 
         </ValidatorForm>
