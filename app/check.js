@@ -58,3 +58,11 @@ exports.loginPub = function(req, res, next) {
     else{console.log("Invalid username");}
   });
 }
+
+exports.campaign = function(req, res, next) {
+    var details=req.body;
+    connection.query('INSERT INTO campaigns SET ?',details, function (error, results){
+      if (error) throw error;
+      else {res.send(JSON.stringify(results)); console.log("New campaign entered"); }
+    });
+}

@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
+    "cloudinary": "^1.9.0",
     "cors": "^2.8.3",
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
@@ -23,9 +24,11 @@
     "mysql": "^2.13.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-dropzone": "^3.13.3",
     "react-material-ui-form-validator": "^0.5.0",
     "react-router-dom": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "superagent": "^3.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
