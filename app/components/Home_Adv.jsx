@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import { ValidatorForm, TextValidator, SelectValidator, DateValidator} from 'react-material-ui-form-validator';
 import SelectField from 'material-ui/SelectField';
 import {Card, CardTitle, CardActions} from 'material-ui/Card';
+import Slider from 'material-ui/Slider';
 import axios from 'axios';
 
 
@@ -14,9 +15,14 @@ class Campaign extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      cname:'', adv:'', domain:'',category:'',lname:'',gender:'',date:'',age:'',mobile:'',
+      cname:'', adv:'', domain:'',category:'',slider:'50',gender:'',date:'',age:'',mobile:'',
     };
-    }
+    this.handleSlider = this.handleSlider.bind(this);
+  }
+
+  handleSlider(event,value){
+    this.setState({slider:value});
+  }
 
   render(){
     return(
@@ -50,14 +56,22 @@ class Campaign extends React.Component{
 
             <SelectValidator name="category" validators={['required']}
                           errorMessages={['This field is required']} floatingLabelText="Campaign Category"
-                          value={this.state.category}
+                        value={this.state.category} multiple={true}
                           onChange={(event,index,value)=>this.setState({category:value})}>
               <MenuItem value='arts' primaryText="Arts" />
               <MenuItem value='music' primaryText="Music" />
               <MenuItem value='books' primaryText="Books" />
             </SelectValidator>
+            <h3>Daily Budget</h3>
+            <Slider
+              min={0}
+              max={100}
+              step={0.5}
+              value={this.state.slider}
+              onChange={this.handleSlider}
+            />
 
-            
+
 
 
 
